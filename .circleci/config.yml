@@ -1,8 +1,22 @@
 version: 2.1
-jobs:
-  build:
-    docker:
-      - image: circleci/node:14
+jobs: # we have jobs, so that a workflow can coordinate them!
+  build: # job name 
+    docker: # it uses the docker executor
+      - image: circleci/node:14  # specifically, a docker image circleci/node:14
+     # Steps are a list of commands to run inside the docker container above.
     steps:
-      - checkout
+      - checkout # this pulls code down from GitHub
       - run: echo "Hello SoftTeco"
+      - run:
+          name: Show Node version
+          command: |
+            ls -la
+            node -v
+            npm -v
+      - run:
+          name: Install deps
+          command: npm install
+      - run:
+          name: build project
+          command: npm run build
+
